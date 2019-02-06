@@ -23,7 +23,10 @@
 #define MASTER_RIGHT
 #define PERMISSIVE_HOLD
 #define TAPPING_TERM 150
-#define LEADER_TIMEOUT 200
+#define LEADER_TIMEOUT 300
 #define LEADER_PER_KEY_TIMING
+#define TAPPING_TOGGLE 2
+#define LSPO_KEY KC_8
+#define RSPC_KEY KC_9
 
 #endif
