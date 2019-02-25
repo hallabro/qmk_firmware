@@ -60,6 +60,7 @@ extern keymap_config_t keymap_config;
 #define KC_LCBRC  RALT(KC_7)
 #define KC_RCBRC  RALT(KC_0)
 #define KC_CPYPST TD(TD_COPY_PASTE)
+#define RALT_MOVE LM(_MOVEMENT, MOD_RALT)
 
 #define MOVEMENT MO(_MOVEMENT)
 
@@ -133,25 +134,29 @@ void matrix_scan_user(void) {
 //};
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  /*if (record->event.pressed) {
-        switch (keycode) {
-            case KCBSPCD:
-              if (record->event.pressed) {
-                uint8_t current_mods = get_mods();
-                if (current_mods & SHIFT_MOD) {
-                  clear_mods();
-                  SEND_STRING(SS_TAP(X_DELETE));
-                  set_mods(current_mods);
-                } else {
-                  SEND_STRING(SS_TAP(X_BSPACE));
-                }
-              }
-              return false;
-        }
-	}*/
+  if (record->event.pressed) {
+    switch (keycode) {
+      // RALT_MOVE, disables RALT modifier
+    case KC_LEFT:
+    case KC_RIGHT:
+    case KC_UP:
+    case KC_DOWN:
+      if (record->event.pressed) {
+	uint8_t current_mods = get_mods();
+	if (current_mods & MOD_RALT) {
+	  clear_mods();
+	  register_code(keycode);
+	  unregister_code(keycode);
+	  set_mods(current_mods);
+	}
+      }
+      return false;
+    }
+  }
 
-    return true;
+  return true;
 };
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -160,7 +165,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     NO_PLUS,   NO_MINS,   KC_DOT,    KC_COMMA,  KC_P,      KC_Y,      KC_HOME,                                   KC_END,      KC_F,     KC_G,       KC_C,      KC_R,      KC_L, KC_CPYPST,
     KC_LCTRL,  KC_A,      KC_O,      KC_E,      KC_U,      KC_I,      KC_LCBRC,                                KC_RCBRC,      KC_D,     KC_H,       KC_T,      KC_N,      KC_S,  KC_RCTRL,
     KC_LSPO,   KC_NUBS,   KC_Q,      KC_J,      KC_K,      KC_X,      KC_BRKTL,                                KC_BRKTR,      KC_B,     KC_M,       KC_W,      KC_V,      KC_Z,   KC_RSPC,
-    KC_LEAD,   NO_QUOT,   KC_NUHS,   MOVEMENT,  KC_TAB,    KC_SPACE,  KC_LGUI,     KC_LALT,        KC_RALT,    KC_ENTER, KC_BSPACE,   KC_DEL,      NO_AA,     NO_AE,   NO_OSLH,   KC_LEAD
+    KC_LEAD,   NO_QUOT,   KC_NUHS,   KC_EQL,    KC_TAB,    KC_SPACE,  KC_LGUI,     KC_LALT,        RALT_MOVE,  KC_ENTER, KC_BSPACE,   KC_DEL,      NO_AA,     NO_AE,   NO_OSLH,   KC_LEAD
   ),
 
   [_QWERTY] = LAYOUT(
@@ -187,4 +192,3 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _________, _________, _________, _________, _________, _________, _________, _________,        _________, _________, _________, _________, _________, _________, _________, _________
   ),
 };
-
