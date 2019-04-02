@@ -18,7 +18,7 @@
 
 enum {
   TD_COPY_PASTE = 1,
-  TD_ALT_RALT = 1,
+  TD_ALT_RALT = 2,
 };
 
 enum {
@@ -63,14 +63,16 @@ extern keymap_config_t keymap_config;
 #define KC_RCBRC  RALT(KC_0)
 #define KC_CPYPST TD(TD_COPY_PASTE)
 #define ALT_RALT  TD(TD_ALT_RALT)
+#define KC_FSLASH LSFT(KC_7)
+#define KC_BSLASH RALT(KC_MINUS)
 
 #define MOVEMENT MO(_MOVEMENT)
+#define LOWER    MO(_LOWER)
 
 #define _DVORAK 0
 #define _QWERTY 1
 #define _LOWER 2
-#define _NUMPAD 3
-#define _MOVEMENT 4
+#define _MOVEMENT 3
 
 LEADER_EXTERNS();
 
@@ -79,49 +81,8 @@ void matrix_scan_user(void) {
     leading = false;
     leader_end();
 
-    SEQ_ONE_KEY(KC_INS) {
-      layer_invert(_NUMPAD);
-    }
-
     SEQ_ONE_KEY(NO_OSLH) {
       layer_invert(_QWERTY);
-    }
-
-    SEQ_ONE_KEY(KC_1) {
-      SEND_STRING(SS_TAP(X_F1));
-    }
-    SEQ_ONE_KEY(KC_2) {
-      SEND_STRING(SS_TAP(X_F2));
-    }
-    SEQ_ONE_KEY(KC_3) {
-      SEND_STRING(SS_TAP(X_F3));
-    }
-    SEQ_ONE_KEY(KC_4) {
-      SEND_STRING(SS_TAP(X_F4));
-    }
-    SEQ_ONE_KEY(KC_5) {
-      SEND_STRING(SS_TAP(X_F5));
-    }
-    SEQ_ONE_KEY(KC_6) {
-      SEND_STRING(SS_TAP(X_F6));
-    }
-    SEQ_ONE_KEY(KC_7) {
-      SEND_STRING(SS_TAP(X_F7));
-    }
-    SEQ_ONE_KEY(KC_8) {
-      SEND_STRING(SS_TAP(X_F8));
-    }
-    SEQ_ONE_KEY(KC_9) {
-      SEND_STRING(SS_TAP(X_F9));
-    }
-    SEQ_ONE_KEY(KC_0) {
-      SEND_STRING(SS_TAP(X_F10));
-    }
-    SEQ_ONE_KEY(KC_MINS) {
-      SEND_STRING(SS_TAP(X_F11));
-    }
-    SEQ_ONE_KEY(KC_DOT) {
-      SEND_STRING(SS_TAP(X_F12));
     }
 
     SEQ_ONE_KEY(KC_ESC) {
@@ -130,32 +91,7 @@ void matrix_scan_user(void) {
   }
 }
 
-//enum custom_keycodes
-//{
- //KC_BSPCD = SAFE_RANGE
-//};
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  /*if (record->event.pressed) {
-    switch (keycode) {
-      // RALT_MOVE, disables RALT modifier
-    case KC_LEFT:
-    case KC_RIGHT:
-    case KC_UP:
-    case KC_DOWN:
-      if (record->event.pressed) {
-	uint8_t current_mods = get_mods();
-	if (current_mods & MOD_RALT) {
-	  clear_mods();
-	  register_code(keycode);
-	  unregister_code(keycode);
-	  set_mods(current_mods);
-	}
-      }
-      return false;
-    }
-    }*/
-
   return true;
 };
 
@@ -163,11 +99,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_DVORAK] = LAYOUT(
-    KC_ESC,    KC_1,      KC_2,      KC_3,      KC_4,      KC_5,      KC_PGUP,                                  KC_PGDN,      KC_6,     KC_7,       KC_8,      KC_9,      KC_0,    KC_INS,
-    NO_PLUS,   NO_MINS,   KC_DOT,    KC_COMMA,  KC_P,      KC_Y,      KC_HOME,                                   KC_END,      KC_F,     KC_G,       KC_C,      KC_R,      KC_L, KC_CPYPST,
+    KC_ESC,    KC_1,      KC_2,      KC_3,      KC_4,      KC_5,      KC_HOME,                                 KC_END,        KC_6,     KC_7,       KC_8,      KC_9,      KC_0,    KC_INS,
+    NO_PLUS,   NO_MINS,   KC_DOT,    KC_COMMA,  KC_P,      KC_Y,      KC_FSLASH,                               KC_BSLASH,     KC_F,     KC_G,       KC_C,      KC_R,      KC_L, KC_CPYPST,
     KC_LCTRL,  KC_A,      KC_O,      KC_E,      KC_U,      KC_I,      KC_LCBRC,                                KC_RCBRC,      KC_D,     KC_H,       KC_T,      KC_N,      KC_S,  KC_RCTRL,
     KC_LSPO,   KC_NUBS,   KC_Q,      KC_J,      KC_K,      KC_X,      KC_BRKTL,                                KC_BRKTR,      KC_B,     KC_M,       KC_W,      KC_V,      KC_Z,   KC_RSPC,
-    KC_LEAD,   NO_QUOT,   KC_NUHS,   KC_EQL,    KC_TAB,    KC_SPACE,  KC_LGUI,    ALT_RALT,        MOVEMENT,   KC_ENTER, KC_BSPACE,   KC_DEL,      NO_AA,     NO_AE,   NO_OSLH,   KC_LEAD
+    LOWER,     NO_QUOT,   KC_NUHS,   KC_EQL,    KC_TAB,    KC_SPACE,  KC_LGUI,    ALT_RALT,        MOVEMENT,   KC_ENTER, KC_BSPACE,   KC_DEL,      NO_AA,     NO_AE,   NO_OSLH,   KC_LEAD
   ),
 
   [_QWERTY] = LAYOUT(
@@ -178,12 +114,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _________, _________, _________, _________, _________, _________, _________, _________,        _________, _________, _________, _________, _________, _________, _________, _________
   ),
 
-  [_NUMPAD] = LAYOUT(
-    _________, _________, _________, _________, _________, _________, _________,                              _________, _________, _________, _________, _________, _________, _________,
-    _________, _________, _________, _________, _________, _________, _________,                              _________, _________,      KC_7,      KC_8,      KC_9, _________, _________,
-    _________, _________, _________, _________, _________, _________, _________,                              _________, _________,      KC_4,      KC_5,      KC_6, _________, _________,
+  [_LOWER] = LAYOUT(
+    _________,     KC_F1,     KC_F2,     KC_F3,     KC_F4,     KC_F5,   KC_PGUP,                                KC_PGDN,    KC_F6,     KC_F7,     KC_F8,     KC_F9,    KC_F10, _________,
+    _________,    KC_F11,    KC_F12, _________, _________, _________, _________,                              _________, _________,      KC_7,      KC_8,      KC_9, _________, _________,
+    _________,     NO_AT, _________, _________, _________, _________, _________,                              _________, _________,      KC_4,      KC_5,      KC_6, _________, _________,
     _________, _________, _________, _________, _________, _________, _________,                              _________, _________,      KC_1,      KC_2,      KC_3, _________, _________,
-    _________, _________, _________, _________, _________, _________, _________, _________,        _________, _________, _________,      KC_0, _________, _________, _________, _________
+    _________, _________, _________, _________, _________,   NO_PIPE, _________, _________,        _________, _________, _________,      KC_0, _________, _________, _________, _________
   ),
 
   [_MOVEMENT] = LAYOUT(
@@ -192,5 +128,5 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _________, _________, _________, _________, _________, _________, _________,                              _________, _________,   KC_LEFT,   KC_DOWN,     KC_UP,   KC_RGHT, _________,
     _________, _________, _________, _________, _________, _________, _________,                              _________, _________, _________, _________, _________, _________, _________,
     _________, _________, _________, _________, _________, _________, _________, _________,        _________, _________, _________, _________, _________, _________, _________, _________
-  ),
+  )
 };
