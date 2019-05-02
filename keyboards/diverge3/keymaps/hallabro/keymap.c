@@ -29,6 +29,10 @@ enum {
   DOUBLE_SINGLE_TAP = 5
 };
 
+enum custom_keycodes {
+  TILDE = SAFE_RANGE,
+};
+
 typedef struct {
   bool is_press_action;
   int state;
@@ -65,6 +69,8 @@ extern keymap_config_t keymap_config;
 #define ALT_RALT  TD(TD_ALT_RALT)
 #define KC_FSLASH LSFT(KC_7)
 #define KC_BSLASH RALT(KC_MINUS)
+#define NO_TILDE  RALT(KC_RBRC)
+#define NO_DOLLAR RALT(KC_4)
 
 #define MOVEMENT MO(_MOVEMENT)
 #define LOWER    MO(_LOWER)
@@ -92,6 +98,14 @@ void matrix_scan_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+  case (TILDE):
+    if (record->event.pressed) {
+      SEND_STRING(SS_RALT(SS_TAP(X_RBRACKET)SS_TAP(X_RBRACKET)));
+    }
+    break;
+  }
+
   return true;
 };
 
@@ -117,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_LOWER] = LAYOUT(
     _________,     KC_F1,     KC_F2,     KC_F3,     KC_F4,     KC_F5,   KC_PGUP,                                KC_PGDN,    KC_F6,     KC_F7,     KC_F8,     KC_F9,    KC_F10, _________,
     _________,    KC_F11,    KC_F12, _________, _________, _________, _________,                              _________, _________,      KC_7,      KC_8,      KC_9, _________, _________,
-    _________,     NO_AT, _________, _________, _________, _________, _________,                              _________, _________,      KC_4,      KC_5,      KC_6, _________, _________,
+    _________,     NO_AT,     TILDE, _________, _________, _________, _________,                              _________, NO_DOLLAR,      KC_4,      KC_5,      KC_6, _________, _________,
     _________, _________, _________, _________, _________, _________, _________,                              _________, _________,      KC_1,      KC_2,      KC_3, _________, _________,
     _________, _________, _________, _________, _________,   NO_PIPE, _________, _________,        _________, _________, _________,      KC_0, _________, _________, _________, _________
   ),
