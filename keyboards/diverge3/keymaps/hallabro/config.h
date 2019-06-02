@@ -28,5 +28,6 @@
 #define TAPPING_TOGGLE 2
 #define LSPO_KEY KC_8
 #define RSPC_KEY KC_9
+#define DISABLE_SPACE_CADET_ROLLOVER
 
 #endif

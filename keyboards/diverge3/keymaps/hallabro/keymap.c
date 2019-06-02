@@ -69,33 +69,16 @@ extern keymap_config_t keymap_config;
 #define ALT_RALT  TD(TD_ALT_RALT)
 #define KC_FSLASH LSFT(KC_7)
 #define KC_BSLASH RALT(KC_MINUS)
-#define NO_TILDE  RALT(KC_RBRC)
 #define NO_DOLLAR RALT(KC_4)
+#define NO_ASTRSK LSFT(KC_NUHS)
 
-#define MOVEMENT MO(_MOVEMENT)
-#define LOWER    MO(_LOWER)
+#define RAISE MO(_RAISE)
+#define LOWER MO(_LOWER)
 
 #define _DVORAK 0
 #define _QWERTY 1
 #define _LOWER 2
-#define _MOVEMENT 3
-
-LEADER_EXTERNS();
-
-void matrix_scan_user(void) {
-  LEADER_DICTIONARY() {
-    leading = false;
-    leader_end();
-
-    SEQ_ONE_KEY(NO_OSLH) {
-      layer_invert(_QWERTY);
-    }
-
-    SEQ_ONE_KEY(KC_ESC) {
-      reset_keyboard();
-    }
-  }
-}
+#define _RAISE 3
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -111,13 +94,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-
   [_DVORAK] = LAYOUT(
-    KC_ESC,    KC_1,      KC_2,      KC_3,      KC_4,      KC_5,      KC_HOME,                                 KC_END,        KC_6,     KC_7,       KC_8,      KC_9,      KC_0,    KC_INS,
+    KC_ESC,    KC_1,      KC_2,      KC_3,      KC_4,      KC_5,      NO_ASTRSK,                               TILDE,         KC_6,     KC_7,       KC_8,      KC_9,      KC_0,    KC_INS,
     NO_PLUS,   NO_MINS,   KC_DOT,    KC_COMMA,  KC_P,      KC_Y,      KC_FSLASH,                               KC_BSLASH,     KC_F,     KC_G,       KC_C,      KC_R,      KC_L, KC_CPYPST,
     KC_LCTRL,  KC_A,      KC_O,      KC_E,      KC_U,      KC_I,      KC_LCBRC,                                KC_RCBRC,      KC_D,     KC_H,       KC_T,      KC_N,      KC_S,  KC_RCTRL,
     KC_LSPO,   KC_NUBS,   KC_Q,      KC_J,      KC_K,      KC_X,      KC_BRKTL,                                KC_BRKTR,      KC_B,     KC_M,       KC_W,      KC_V,      KC_Z,   KC_RSPC,
-    LOWER,     NO_QUOT,   KC_NUHS,   KC_EQL,    KC_TAB,    KC_SPACE,  KC_LGUI,    ALT_RALT,        MOVEMENT,   KC_ENTER, KC_BSPACE,   KC_DEL,      NO_AA,     NO_AE,   NO_OSLH,   KC_LEAD
+    RAISE,     NO_QUOT,   KC_NUHS,   KC_EQL,    KC_TAB,    KC_SPACE,  KC_LGUI,       LOWER,          KC_LALT,  KC_ENTER, KC_BSPACE,   KC_DEL,      NO_AA,     NO_AE,   NO_OSLH,   NO_PIPE
   ),
 
   [_QWERTY] = LAYOUT(
@@ -129,16 +111,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_LOWER] = LAYOUT(
-    _________,     KC_F1,     KC_F2,     KC_F3,     KC_F4,     KC_F5,   KC_PGUP,                                KC_PGDN,    KC_F6,     KC_F7,     KC_F8,     KC_F9,    KC_F10, _________,
+    _________,     KC_F1,     KC_F2,     KC_F3,     KC_F4,     KC_F5,   KC_PGUP,                                KC_PGDN,     KC_F6,     KC_F7,     KC_F8,     KC_F9,    KC_F10, _________,
     _________,    KC_F11,    KC_F12, _________, _________, _________, _________,                              _________, _________,      KC_7,      KC_8,      KC_9, _________, _________,
-    _________,     NO_AT,     TILDE, _________, _________, _________, _________,                              _________, NO_DOLLAR,      KC_4,      KC_5,      KC_6, _________, _________,
+    _________, _________, _________, _________, _________, _________, _________,                              _________, NO_DOLLAR,      KC_4,      KC_5,      KC_6, _________, _________,
     _________, _________, _________, _________, _________, _________, _________,                              _________, _________,      KC_1,      KC_2,      KC_3, _________, _________,
-    _________, _________, _________, _________, _________,   NO_PIPE, _________, _________,        _________, _________, _________,      KC_0, _________, _________, _________, _________
+    _________, _________, _________, _________, _________, _________, _________, _________,          KC_RALT, _________, _________,      KC_0, _________, _________, _________, _________
   ),
 
-  [_MOVEMENT] = LAYOUT(
-    _________, _________, _________, _________, _________, _________, _________,                              _________, _________, _________, _________, _________, _________, _________,
-    _________, _________, _________, _________, _________, _________, _________,                              _________, _________, _________, _________, _________, _________, _________,
+  [_RAISE] = LAYOUT(
+    RESET,     _________, _________, _________, _________, _________, _________,                              _________, _________, _________, _________, _________, _________, _________,
+    _________, _________, _________, _________, _________, _________, _________,                              _________, _________,   KC_HOME,   KC_PGDN,   KC_PGUP,    KC_END, _________,
     _________, _________, _________, _________, _________, _________, _________,                              _________, _________,   KC_LEFT,   KC_DOWN,     KC_UP,   KC_RGHT, _________,
     _________, _________, _________, _________, _________, _________, _________,                              _________, _________, _________, _________, _________, _________, _________,
     _________, _________, _________, _________, _________, _________, _________, _________,        _________, _________, _________, _________, _________, _________, _________, _________
