@@ -31,6 +31,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_ROWS 10
 #define MATRIX_COLS 8
 
+#define MASTER_RIGHT
+
 /*
  * Keyboard Matrix Assignments
  *
@@ -57,6 +59,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* serial.c configuration for split keyboard */
 #define SOFT_SERIAL_PIN D0
+#define SELECT_SOFT_SERIAL_SPEED 2
 
 #ifndef SELECT_SOFT_SERIAL_SPEED
 #define SELECT_SOFT_SERIAL_SPEED 3
@@ -71,13 +74,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LOCKING_RESYNC_ENABLE
 
 /* If defined, GRAVE_ESC will always act as ESC when CTRL is held.
- * This is userful for the Windows task manager shortcut (ctrl+shift+esc).
- */
- #define GRAVE_ESC_CTRL_OVERRIDE
 
-/*
- * Force NKRO
- *
  * Force NKRO (nKey Rollover) to be enabled by default, regardless of the saved
  * state in the bootmagic EEPROM settings. (Note that NKRO must be enabled in the
  * makefile for this to work.)

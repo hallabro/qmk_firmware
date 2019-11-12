@@ -1,4 +1,4 @@
-/* Copyright 2017 IslandMan93
+/* Copyright 2017 IslanvedMan93
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

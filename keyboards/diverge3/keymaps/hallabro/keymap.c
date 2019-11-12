@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
-#include "keymap_swedish.h"
+#include "keymap_nordic.h"
 
 enum {
   TD_COPY_PASTE = 1,
@@ -58,6 +58,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 extern keymap_config_t keymap_config;
 
+#define NO_AA     KC_LBRC
+
 #define _________ KC_TRNS
 #define KC_BRKTL  RALT(KC_8)
 #define KC_BRKTR  RALT(KC_9)
@@ -70,6 +72,8 @@ extern keymap_config_t keymap_config;
 #define TG_QWERTY TG(_QWERTY)
 #define TG_GAMING TG(_GAMING)
 #define COPYPASTE TD(TD_COPY_PASTE)
+#define KC_LPARAN LSFT(KC_8)
+#define KC_RPARAN LSFT(KC_9)
 
 #define RAISE MO(_RAISE)
 #define LOWER MO(_LOWER)
@@ -94,31 +98,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_DVORAK] = LAYOUT(
-    KC_ESC,    KC_1,      KC_2,      KC_3,      KC_4,      KC_5,      NO_ASTRSK,                               TILDE,         KC_6,     KC_7,       KC_8,      KC_9,      KC_0,    KC_INS,
-    NO_PLUS,   NO_MINS,   KC_DOT,    KC_COMMA,  KC_P,      KC_Y,      KC_FSLASH,                               KC_BSLASH,     KC_F,     KC_G,       KC_C,      KC_R,      KC_L, COPYPASTE,
-    KC_LCTRL,  KC_A,      KC_O,      KC_E,      KC_U,      KC_I,      KC_LCBRC,                                KC_RCBRC,      KC_D,     KC_H,       KC_T,      KC_N,      KC_S,  KC_RCTRL,
-    KC_LSPO,   KC_NUBS,   KC_Q,      KC_J,      KC_K,      KC_X,      KC_BRKTL,                                KC_BRKTR,      KC_B,     KC_M,       KC_W,      KC_V,      KC_Z,   KC_RSPC,
-    RAISE,     NO_QUOT,   KC_NUHS,   KC_EQL,    KC_TAB,    KC_SPACE,  KC_LGUI,  KC_LALT,               LOWER,  KC_ENTER, KC_BSPACE,   KC_DEL,      NO_AA,     NO_AE,   NO_OSLH,   NO_PIPE
+    KC_ESC,    KC_1,      KC_2,      KC_3,      KC_4,      KC_5,      KC_NUHS,                                    TILDE,      KC_6,     KC_7,       KC_8,      KC_9,      KC_0,    KC_INS,
+    NO_PLUS,   NO_MINS,   KC_COMMA,  KC_DOT,    KC_P,      KC_Y,      KC_FSLASH,                              KC_BSLASH,      KC_F,     KC_G,       KC_C,      KC_R,      KC_L, COPYPASTE,
+    KC_LCTRL,  KC_A,      KC_O,      KC_E,      KC_U,      KC_I,      KC_LPARAN,                              KC_RPARAN,      KC_D,     KC_H,       KC_T,      KC_N,      KC_S,  KC_RCTRL,
+    KC_LSFT,   KC_NUBS,   KC_Q,      KC_J,      KC_K,      KC_X,      KC_LCBRC,                                KC_RCBRC,      KC_B,     KC_M,       KC_W,      KC_V,      KC_Z,   KC_RSFT,
+    RAISE,     NO_AA,     NO_OSLH,   NO_AE,   KC_TAB,      KC_SPACE,  KC_LGUI,   KC_LALT,              LOWER,  KC_ENTER, KC_BSPACE,   KC_DEL,    NO_QUOT, NO_ASTRSK,    KC_EQL,   NO_PIPE
   ),
   [_QWERTY] = LAYOUT(
     _________, _________, _________, _________, _________, _________, _________,                              _________, _________, _________, _________, _________, _________, _________,
-    _________,      KC_Q,      KC_W,      KC_E,      KC_R,      KC_T, _________,                              _________,      KC_Y,      KC_U,      KC_I,      KC_O,      KC_P, _________,
-    _________,      KC_A,      KC_S,      KC_D,      KC_F,      KC_G, _________,                              _________,      KC_H,      KC_J,      KC_K,      KC_L,   _______, _________,
-    _________,      KC_Z,      KC_X,      KC_C,      KC_V,      KC_B, _________,                              _________,      KC_N,      KC_M,  KC_COMMA,    KC_DOT,   KC_NUBS, _________,
+    _________, KC_Q,      KC_W,      KC_E,      KC_R,      KC_T,      _________,                              _________,      KC_Y,      KC_U,      KC_I,      KC_O,      KC_P, _________,
+    _________, KC_A,      KC_S,      KC_D,      KC_F,      KC_G,      _________,                              _________,      KC_H,      KC_J,      KC_K,      KC_L,   _______, _________,
+    _________, KC_Z,      KC_X,      KC_C,      KC_V,      KC_B,      _________,                              _________,      KC_N,      KC_M,  KC_COMMA,    KC_DOT,   KC_NUBS, _________,
     _________, _________, _________, _________, _________, _________, _________, _________,        _________, _________, _________, _________, _________, _________, _________, _________
   ),
   [_GAMING] = LAYOUT(
-    _________, _________, _________, _________, _________, _________, KC_F13,                                 _________, _________, _________, _________, _________, _________, _________,
-    _________, _________, _________, _________, _________, _________, KC_F14,                                 _________, _________, _________, _________, _________, _________, _________,
-    _________, _________, _________, _________, _________, _________, KC_F15,                                 _________, _________, _________, _________, _________, _________, _________,
-    KC_LSHIFT, _________, _________, _________, _________, _________, KC_F16,                                 _________, _________, _________, _________, _________, _________, _________,
-    _________,    KC_F17,    KC_F18,    KC_F19, _________, _________, KC_ENTER,  _________,        _________, _________, _________, _________, _________, _________, _________, _________
+    _________, _________, _________, _________, _________, _________, _________,                              _________, _________, _________, _________, _________, _________, _________,
+    _________, _________, _________, _________, _________, _________, KC_6,                                   _________, _________, _________, _________, _________, _________, _________,
+    KC_TAB,    _________, _________, _________, _________, _________, KC_7,                                   _________, _________, _________, _________, _________, _________, _________,
+    KC_LSHIFT, _________, _________, _________, _________, _________, KC_8,                                   _________, _________, _________, _________, _________, _________, _________,
+    _________, _________, _________, _________, LOWER,     _________, KC_LCTRL,  _________,        _________, _________, _________, _________, _________, _________, _________, _________
   ),
   [_LOWER] = LAYOUT(
-    _________,     KC_F1,     KC_F2,     KC_F3,     KC_F4,     KC_F5, _________,                              _________,     KC_F6,     KC_F7,     KC_F8,     KC_F9,    KC_F10, _________,
-    _________,    KC_F11,    KC_F12, _________, _________, _________, _________,                              _________, _________,      KC_7,      KC_8,      KC_9, _________, _________,
+    _________, KC_F1,     KC_F2,     KC_F3,     KC_F4,     KC_F5,     _________,                              _________,     KC_F6,     KC_F7,     KC_F8,     KC_F9,    KC_F10, _________,
+    _________, KC_F11,    KC_F12,    _________, _________, _________, _________,                              _________, _________,      KC_7,      KC_8,      KC_9, _________, _________,
     _________, _________, _________, _________, _________, _________, _________,                              _________, _________,      KC_4,      KC_5,      KC_6, _________, _________,
-    _________, _________, _________, _________, _________, _________, _________,                              _________, _________,      KC_1,      KC_2,      KC_3, _________, _________,
+    _________, _________, _________, _________, _________, _________, KC_BRKTL,                                KC_BRKTR, _________,      KC_1,      KC_2,      KC_3, _________, _________,
     _________, _________, _________, _________, _________, _________, _________, _________,        _________, _________, _________,      KC_0, _________, _________, _________, _________
   ),
   [_RAISE] = LAYOUT(
