@@ -99,16 +99,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_DVORAK] = LAYOUT(
     KC_ESC,    KC_1,      KC_2,      KC_3,      KC_4,      KC_5,      KC_BRKTL,                                KC_BRKTR,      KC_6,     KC_7,       KC_8,      KC_9,      KC_0,   KC_NUHS,
-    NO_PLUS,   NO_MINS,   KC_COMMA,  KC_DOT,    KC_P,      KC_Y,      KC_FSLASH,                              KC_BSLASH,      KC_F,     KC_G,       KC_C,      KC_R,      KC_L, COPYPASTE,
+    KC_NUBS,   NO_MINS,   KC_COMMA,  KC_DOT,    KC_P,      KC_Y,      KC_FSLASH,                              KC_BSLASH,      KC_F,     KC_G,       KC_C,      KC_R,      KC_L, COPYPASTE,
     KC_LCTRL,  KC_A,      KC_O,      KC_E,      KC_U,      KC_I,      KC_LPARAN,                              KC_RPARAN,      KC_D,     KC_H,       KC_T,      KC_N,      KC_S,  KC_RCTRL,
-    KC_LSFT,   KC_NUBS,   KC_Q,      KC_J,      KC_K,      KC_X,      KC_LCBRC,                                KC_RCBRC,      KC_B,     KC_M,       KC_W,      KC_V,      KC_Z,   KC_RSFT,
+    KC_LSFT,   NO_PLUS,   KC_Q,      KC_J,      KC_K,      KC_X,      KC_LCBRC,                                KC_RCBRC,      KC_B,     KC_M,       KC_W,      KC_V,      KC_Z,   KC_RSFT,
     RAISE,     NO_AA,     NO_OSLH,   NO_AE,   KC_TAB,      KC_SPACE,  KC_LGUI,   KC_LALT,              LOWER,  KC_ENTER, KC_BSPACE,   KC_DEL,    NO_QUOT, NO_ASTRSK,    KC_EQL,   NO_PIPE
   ),
   [_QWERTY] = LAYOUT(
     _________, _________, _________, _________, _________, _________, _________,                              _________, _________, _________, _________, _________, _________, _________,
     _________, KC_Q,      KC_W,      KC_E,      KC_R,      KC_T,      _________,                              _________,      KC_Y,      KC_U,      KC_I,      KC_O,      KC_P, _________,
-    _________, KC_A,      KC_S,      KC_D,      KC_F,      KC_G,      _________,                              _________,      KC_H,      KC_J,      KC_K,      KC_L,   _______, _________,
-    _________, KC_Z,      KC_X,      KC_C,      KC_V,      KC_B,      _________,                              _________,      KC_N,      KC_M,  KC_COMMA,    KC_DOT,   KC_NUBS, _________,
+    _________, KC_A,      KC_S,      KC_D,      KC_F,      KC_G,      _________,                              _________,      KC_H,      KC_J,      KC_K,      KC_L,  KC_COMMA, _________,
+    _________, KC_Z,      KC_X,      KC_C,      KC_V,      KC_B,      _________,                              _________,      KC_N,      KC_M,   NO_PLUS,   NO_MINS,    KC_DOT, _________,
     _________, _________, _________, _________, _________, _________, _________, _________,        _________, _________, _________, _________, _________, _________, _________, _________
   ),
   [_GAMING] = LAYOUT(
